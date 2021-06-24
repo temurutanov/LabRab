@@ -1,0 +1,161 @@
+////////////////////////////////////////
+///Задача №1: создайте функцию, которая организует простейшей сжатие входящей символьной строки произвольного масштаба. Сжатие происходит по следующему принципу: если в строке есть последовательность повторяющихся символов, то она заменяется на пару код символа и количество его повтора в строчке. Обеспечьте возможность ввода строки с клавиатуры.
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+string compr(string str)
+{
+	string S;
+
+	for (int i(0); i < str.length(); i++)
+	{
+		int count = 1;
+		int z = i;
+		do
+		{
+			if (str[z + 1] == str[z])
+			{
+				count++;
+				z++;
+			}
+
+		} while (str[z + 1] == str[z]);
+		S += "" + to_string(static_cast<int>(str[i])) + "," + to_string(count) + " ";
+		i = z;
+	}
+	return S;
+}
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+
+	string m_str;
+	string n_str;
+
+	cout << "Введите строку" << endl;
+	getline(cin, m_str);
+
+	n_str = compr(m_str);
+	cout << endl << n_str << endl;
+	system("pause");
+}
+
+///////////////////////////////////////////
+///Задача №2: реализуйте сортировку массива вставками. (массив из целых чисел)
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+
+void insertionSort(int* arrayPtr, int length) // сортировка вставками
+{
+	int temp, // временная переменная для хранения значения элемента сортируемого массива
+		item; // индекс предыдущего элемента
+	for (int counter = 1; counter < length; counter++)
+	{
+		temp = arrayPtr[counter]; // инициализируем временную переменную текущим значением элемента массива
+		item = counter - 1; // запоминаем индекс предыдущего элемента массива
+		while (item >= 0 && arrayPtr[item] > temp) // пока индекс не равен 0 и предыдущий элемент массива больше текущего
+		{
+			arrayPtr[item + 1] = arrayPtr[item]; // перестановка элементов массива
+			arrayPtr[item] = temp;
+			item--;
+		}
+	}
+}
+
+int main()
+{
+
+	setlocale(LC_ALL, "ru");
+	int Q = 0;
+	cout << "Выберите размер массива" << endl;
+	cin >> Q;
+
+	cout << "Введите " << Q << " элементов" << endl;
+	int* arr = new int[Q];
+	for (int i(0); i < Q; i++)
+	{
+		cin >> arr[i];
+	}
+
+	insertionSort(arr, Q); // вызов функции сортировки вставками
+
+	cout << "Вывод " << Q << " элементов" << endl;
+	for (int i(0); i < Q; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	delete[] arr;
+
+	system("pause");
+}
+
+////////////////////////////////////
+///Задача №3: создайте программу, позволяющую находить в строке подстроку и заменять её на другую произвольную подстроку в каждом месте обнаружения.
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+
+void StrReplace(string& str, string untill, string after)
+{	
+	int I; int count=0; int index=0; string l1;
+
+	for (int i(0); i < str.length();i++) //главная
+	{
+		if (str[i] == untill[index])
+		{
+			count++; index++;
+
+			if (count == untill.length())
+			{
+				l1 += after;
+				count = 0;
+				index = 0;
+			}
+		}
+		else
+		{
+			l1+=str[i];
+			if (count != untill.length())
+			{
+				count = 0;
+				index = 0;
+			}
+		}
+	}
+	str = l1; l1.clear();
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	string m_str;
+	string sbstr;
+	string astr;
+
+
+	cout << "Введите строку" << endl;
+	getline(cin, m_str);
+
+	cout << "Введите подстроку" << endl;
+	getline(cin, sbstr);
+
+	cout << "Введите на что изменить" << endl;
+	getline(cin, astr);
+
+	StrReplace(m_str, sbstr, astr);
+
+	cout << m_str << endl;
+}
+
+////////////////////////////////////////////////
